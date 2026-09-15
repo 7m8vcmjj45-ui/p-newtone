@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#140d2b" />
+    <title>P NewTone ～響け、最後の一音～</title>
+  </head>
+  <body>
+    <svg class="svg-defs" aria-hidden="true">
+      <symbol id="mic" viewBox="0 0 48 48">
+        <rect x="17" y="4" width="14" height="24" rx="7" fill="currentColor" />
+        <path d="M11 21a13 13 0 0 0 26 0M24 34v8M17 42h14" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" />
+      </symbol>
+    </svg>
+    <div id="app" class="cabinet">
+      <header class="topbar">
+        <div class="brand"><small>大学アカペラサークル</small><strong>P NewTone</strong><span>～響け、最後の一音～</span></div>
+        <div class="stats">
+          <div class="stat"><small>MODE</small><strong id="modeValue">NORMAL</strong></div>
+          <div class="stat"><small>ST 残り</small><strong id="stValue">—</strong></div>
+          <div class="stat"><small>TOTAL 出玉</small><strong id="ballsValue">0 <em>発</em></strong></div>
+        </div>
+      </header>
+      <main class="machine">
+        <div class="bezel">
+          <div class="bezel-top"><span>♫</span><span>NEW TONE</span><span>♫</span></div>
+          <section id="lcd" class="lcd mode-normal" role="button" tabindex="0" aria-label="画面をタップして入賞・保留を追加">
+            <div class="stage-glow"></div>
+            <div class="scanlines"></div>
+            <div class="lcd-head"><span id="stageName">大宮祭 STAGE</span><span id="spinCounter">通常 0回転</span></div>
+            <div class="zone-label" id="zoneLabel"></div>
+            <div id="preReadSignal" class="pre-read-signal" aria-live="polite"></div>
+            <div id="crackOverlay" class="crack-overlay" aria-hidden="true">
+              <svg viewBox="0 0 900 520" preserveAspectRatio="none">
+                <path d="M450 260 L365 175 L284 142 M365 175 L342 78 M450 260 L542 180 L640 125 M542 180 L570 72 M450 260 L365 348 L250 400 M365 348 L380 485 M450 260 L540 353 L690 425 M540 353 L515 495" />
+              </svg>
+            </div>
+            <div id="entryPulseLayer" class="pulse-layer" aria-hidden="true"></div>
+            <div class="screen-content">
+              <div id="cueTag" class="cue-tag">NEW TONE</div>
+              <h1 id="cueTitle">響け、最後の一音</h1>
+              <p id="cueSubtitle">画面をタップして保留を貯めよう</p>
+              <div id="akasupiProgress" class="akasupi-progress" aria-label="アカスピ審査進行" aria-live="polite"></div>
+              <div id="campusScoreboard" class="campus-scoreboard" aria-label="学内イベントの採点" aria-live="polite"></div>
+              <div class="symbols" id="symbols" aria-label="図柄"><span class="symbol">1</span><span class="symbol">2</span><span class="symbol">3</span></div>
+              <div id="cueFooter" class="cue-footer">タップ ＝ スタートチャッカーに入賞</div>
+            </div>
+            <div class="lcd-bottom">
+              <div class="lcd-hold-bar"><span>消化</span><div id="lcdHolds" class="lcd-holds"></div><span>保留</span></div>
+              <div id="entryStatus" class="entry-status">画面タップで入賞</div>
+            </div>
+            <div id="feedback" class="feedback" aria-live="polite"></div>
+          </section>
+          <div class="bezel-bottom"><span>★</span><span>ACAPPELLA LIVE MACHINE</span><span>★</span></div>
+        </div>
+        <div class="control-panel">
+          <div class="hold-wrap">
+            <div class="hold-title"><span>MIC HOLD</span><small id="holdCount">0 / 4</small></div>
+            <div class="hold-row">
+              <div class="active-hold"><small>変動中</small><div id="activeHold" class="hold-slot active"></div></div>
+              <div id="holds" class="holds" aria-label="保留4個"></div>
+            </div>
+          </div>
+          <button id="handleButton" class="handle-button" type="button" aria-pressed="false" aria-label="ハンドル式オート入賞を切り替える"><span>HANDLE</span><strong>OFF</strong></button>
+          <button id="pushButton" class="push-button" type="button" aria-label="PUSH">PUSH</button>
+        </div>
+        <div class="operation-hint">液晶タップで1入賞。ハンドルONなら自動で入賞し、保留を消化します。</div>
+      </main>
+      <a id="debugShortcut" class="debug-shortcut" href="?debug=1&fast=1" hidden>開発用デバッグを開く</a>
+      <details id="debugPanel" class="debug-panel" hidden>
+        <summary>開発用デバッグパネル</summary>
+        <div class="debug-grid">
+          <button data-debug="add">保留＋1</button><button data-debug="fill">保留4個まで</button>
+          <button data-debug="win">次回転 大当たり</button><button data-debug="loss">次回転 ハズレ</button>
+          <button data-debug="rush">RUSH突入</button><button data-debug="last">RUSH終了直前</button>
+          <button data-debug="red">赤保留</button><button data-debug="gold">金保留</button><button data-debug="rainbow">虹保留</button>
+          <button data-debug="wall">壁割れ</button><button data-debug="mirror">鏡割れ復活</button>
+          <button data-debug="kanto-1">関東1次で決着</button><button data-debug="kanto-2">関東2次まで</button>
+          <button data-debug="kanto-final">関東最終まで</button><button data-debug="national-final">全国決勝まで</button>
+          <button data-debug="act">審査中ACT</button>
+          <button data-debug="campus-route">次回転 ステージ変動</button><button data-debug="akasupi-route">アカスピ変動</button>
+          <button data-debug="audition">次回転 結果発表</button><button data-debug="stage-final">規定回転 最終変動</button>
+          <button data-debug="play">設定した次回転を試す</button>
+        </div>
+        <label class="debug-event-select">ステージ指定
+          <select id="debugEventSelect">
+            <option value="omiya">大宮祭</option><option value="teiki">定期演奏会</option>
+            <option value="summer">夏ライ</option><option value="shibaura">芝浦祭</option>
+            <option value="winter">冬ライ</option><option value="christmas">クリライ</option>
+            <option value="spring">春ライ</option>
+          </select>
+        </label>
+        <button data-debug="selected-event" class="debug-selected-event">ステージを選んだ行事に移動</button>
+        <label class="fast-toggle"><input id="fastMode" type="checkbox" />演出時間を短縮</label>
+        <p>結果発表は大宮祭・夏ライ・芝浦祭・春ライで指定できます。規定回転の最終変動は定期演奏会・冬ライ・クリライで指定できます。設定後に「設定した次回転を試す」を押します。</p>
+      </details>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
