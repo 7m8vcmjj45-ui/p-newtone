@@ -64,6 +64,6 @@ Vite、TypeScript、HTML、CSSのみを使用しています。ReactやCanvasは
 
 ## GitHub Pages
 
-`.github/workflows/deploy.yml` は手動起動でテストとビルドを実行し、`dist/` をGitHub Pagesへデプロイします。公開するときはGitHubリポジトリの Settings → Pages → Build and deployment → Source を **GitHub Actions** に設定し、Actionsからこのワークフローを実行してください。デプロイが完了すると `https://<ユーザー名>.github.io/<リポジトリ名>/` で遊べます。デバッグUIはURL末尾に `?debug=1` を付けると表示されます。
+`.github/workflows/deploy.yml` が `main` へのpush時にテストとビルドを実行し、`dist/` をGitHub Pagesへデプロイします。GitHubリポジトリの Settings → Pages → Build and deployment → Source を **GitHub Actions** に設定してください。デプロイが完了すると `https://7m8vcmjj45-ui.github.io/p-newtone/` で遊べます。デバッグUIはURL末尾に `?debug=1` を付けると表示されます。Actionsから手動で再実行することもできます。
 
 vite.config.ts の base: "./" により、リポジトリ名を含むサブパスでもビルド済みアセットを相対参照できます。画像・音声の差し替えパスもPagesでは相対パスで設定してください。
